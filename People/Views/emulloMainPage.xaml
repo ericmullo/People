@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:People.ViewModels"
+             xmlns:models="clr-namespace:People.Models"
+             x:Class="People.Views.emulloMainPage">
+
+    <StackLayout Padding="10" Spacing="10">
+        <!-- Control Entry con x:Name -->
+        <Entry x:Name="newPerson"
+               Placeholder="Enter name"
+               HorizontalOptions="FillAndExpand" />
+
+        <!-- Botón para agregar una persona -->
+        <Button Text="Add Person"
+                Clicked="OnNewButtonClicked"
+                HorizontalOptions="FillAndExpand" />
+
+        <!-- Mensaje de estado -->
+        <Label x:Name="statusMessage"
+               TextColor="Purple"
+               HorizontalOptions="Center"
+               FontSize="14" />
+
+        <!-- Botón para obtener todas las personas -->
+        <Button Text="Get All People"
+                Clicked="OnGetButtonClicked"
+                HorizontalOptions="FillAndExpand" />
+
+        <!-- Lista de personas -->
+        <CollectionView x:Name="peopleList">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="ViewModels:Person">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                        <Label Text="{Binding Id}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Start" />
+
+                        <Label Text="{Binding Name}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="StartAndExpand"
+                               Grid.Column="1" />
+
+                        <Button Text="Delete"
+                                Command="{Binding DeletePersonCommand}"
+                                CommandParameter="{Binding .}"
+                                Grid.Column="2" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>

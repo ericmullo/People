@@ -1,31 +1,17 @@
-﻿using People.Models;
-using System.Collections.Generic;
+﻿namespace People;
 
-namespace People;
-
-public partial class MainPage : ContentPage
+public partial class App : Application
 {
+    public static PersonRepository PersonRepo { get; private set; }
 
-	public MainPage()
-	{
-		InitializeComponent();
-	}
-
-    public void OnNewButtonClicked(object sender, EventArgs args)
+    public App(PersonRepository repo)
     {
-        statusMessage.Text = "";
-
-        App.PersonRepo.AddNewPerson(newPerson.Text);
-        statusMessage.Text = App.PersonRepo.StatusMessage;
+        InitializeComponent();
+        PersonRepo = repo;
     }
 
-    public void OnGetButtonClicked(object sender, EventArgs args)
+    protected override Window CreateWindow(IActivationState activationState)
     {
-        statusMessage.Text = "";
-
-        List<Person> people = App.PersonRepo.GetAllPeople();
-        peopleList.ItemsSource = people;
+        return new Window(new AppShell());
     }
-
 }
-
